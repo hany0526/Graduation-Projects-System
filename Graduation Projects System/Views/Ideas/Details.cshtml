@@ -1,0 +1,74 @@
+﻿@model Graduation_Projects_System.Models.Idea
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Idea</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.professor1.UserType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.professor1.UserType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.professor2.UserType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.professor2.UserType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.professor3.UserType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.professor3.UserType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tools)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tools)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.isApproved)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.isApproved)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
