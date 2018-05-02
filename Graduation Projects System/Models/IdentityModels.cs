@@ -50,5 +50,6 @@ namespace Graduation_Projects_System.Models
         public System.Data.Entity.DbSet<Professor> Professors { get; set; }
 
         public System.Data.Entity.DbSet<Department> Departments { get; set; }
+
     }
 }

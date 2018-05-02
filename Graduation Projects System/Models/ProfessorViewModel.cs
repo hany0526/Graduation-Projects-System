@@ -8,11 +8,10 @@ namespace Graduation_Projects_System.Models
 {
     public class ProfessorViewModel
     {
-        [Required]
         public string Id { get; set; }
 
         [Required]
-        [Display(Name = "User Name")]
+        [Display(Name = "Professor Name")]
         public string name { get; set; }
 
         [Required]
@@ -34,9 +33,12 @@ namespace Graduation_Projects_System.Models
         [Required]
         public string PhoneNumber { get; set; }
 
-        public Department department{ get; set; }
         [Required]
+        public string favorites { get; set; }
+
         [Display(Name = "Department")]
-        public int Departmentid { get; set; }
+        public Department department{ get; set; }
+        [Display(Name = "Department")]
+        public int departmentid { get; set; }
     }
 }

@@ -229,6 +229,10 @@
     <Compile Include="Migrations\201805011638016_7.Designer.cs">
       <DependentUpon>201805011638016_7.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805021746587_8.cs" />
+    <Compile Include="Migrations\201805021746587_8.Designer.cs">
+      <DependentUpon>201805021746587_8.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Department.cs" />
@@ -322,6 +326,9 @@
     <Content Include="Views\Students\Index.cshtml" />
     <Content Include="Views\Students\AddIdea.cshtml" />
     <Content Include="Views\Admin\ListProfessors.cshtml" />
+    <Content Include="Views\Admin\AddProfessor.cshtml" />
+    <Content Include="Views\Admin\DeleteProfessor.cshtml" />
+    <Content Include="Views\Admin\ViewProfessor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -373,6 +380,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805011638016_7.resx">
       <DependentUpon>201805011638016_7.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805021746587_8.resx">
+      <DependentUpon>201805021746587_8.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -14,6 +14,13 @@ namespace Graduation_Projects_System
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "Pro",
+                url: "Professor/{id}",
+                defaults: new { controller = "Admin", action = "ViewProfessor", id = UrlParameter.Optional }
+            );
+
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
