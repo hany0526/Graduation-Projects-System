@@ -7,34 +7,13 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Graduation_Projects_System.Models;
+using Microsoft.AspNet.Identity;
 
 namespace GP.Controllers
 {
     public class ProfessorsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-
-        // GET: Professors/login
-        public ActionResult login()
-        {
-            return View();
-        }
-
-        // POST: Professors/login
-        [HttpPost]
-        public ActionResult login([Bind(Include = "email,password")]  Professor professor)
-        {     
-
-            var professorList =  db.Professors.Where(m => m.email == professor.email && m.password == professor.password).ToList();
-            
-            //Professor p = db.Professors.Where(m => m.email == professor.email && m.password == professor.password).First<Professor>();
-
-            if(professorList.Count != 0)
-                return RedirectToAction("Index");
-
-            else
-                return RedirectToAction("login");
-        }
 
         // GET: Professors
         public ActionResult Index()
@@ -81,18 +60,36 @@ namespace GP.Controllers
         }
 
         // GET: Professors/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit()
         {
+            ViewBag.Departmentid = new SelectList(db.Departments, "id", "name");
+            string id = User.Identity.GetUserId();
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Professor professor = db.Professors.Find(id);
-            if (professor == null)
+
+            ApplicationUser u = db.Users.Include(a => a.Department).Where(a => a.Id == id).FirstOrDefault();
+
+            if (u == null)
             {
                 return HttpNotFound();
             }
-            return View(professor);
+            ViewBag.Departmentid = new SelectList(db.Departments, "id", "name", u.Departmentid);
+
+            ProfessorEditProfileViewModel p = new ProfessorEditProfileViewModel()
+            {
+                
+                departmentid = u.Departmentid,
+                department = u.Department,
+                name = u.name,
+                Email = u.Email,
+                PhoneNumber = u.PhoneNumber
+                
+            };
+
+            return View(p);
         }
 
         // POST: Professors/Edit/5
@@ -100,14 +97,28 @@ namespace GP.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,name,email,password")] Professor professor)
+        public ActionResult Edit(ProfessorEditProfileViewModel professor)
         {
+            ViewBag.Departmentid = new SelectList(db.Departments, "id", "name");
             if (ModelState.IsValid)
             {
-                db.Entry(professor).State = EntityState.Modified;
+                string xid = User.Identity.GetUserId();
+
+                ApplicationUser appuser = db.Users.Find(xid);
+                appuser.name = professor.name;
+                appuser.Email = professor.Email;
+                appuser.UserName = professor.Email;
                 db.SaveChanges();
+
+                Professor i = db.Professors.FirstOrDefault(a => a.userId == xid);
+
+                i.Interests = professor.Interests;
+                i.IsAproved = 1;
+                db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
+            ModelState.AddModelError("", "Invalid Edit Profile.");
             return View(professor);
         }
 

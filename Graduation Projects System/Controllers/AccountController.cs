@@ -93,7 +93,30 @@ namespace GP.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    var p = db.Users.Where(m => m.Email == model.Email && m.UserType == "Professor").ToList();
+                    if (p.Count == 1)
+                    {
+                        string id = p.First().Id;
+                        var pr = db.Professors.Where(x => x.userId == id).ToList();
+                        if (pr.Count() == 1)
+                        {
+                            
+                            if (pr.First().IsAproved == 0)
+                            { 
+                                return RedirectToAction("Edit", "Professors");
+                            }
+                            else
+                            { 
+                                return RedirectToLocal("Professors?p.ap=1");
+                            }
+                        }
+                        else
+                        {
+                            return RedirectToLocal("Professors?p.c=0");
+                        }
+                    }
                     return RedirectToLocal(returnUrl);
+
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -208,7 +231,7 @@ namespace GP.Controllers
                         db.SaveChanges();
                     }
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("AddIdea", "Students");
                 }
                 AddErrors(result);
             }

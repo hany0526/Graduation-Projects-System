@@ -8,12 +8,16 @@ using System.Web;
 using System.Web.Mvc;
 using Graduation_Projects_System.Models;
 using Microsoft.AspNet.Identity;
+using System.Threading.Tasks;
+using Microsoft.AspNet.Identity.Owin;
+using System.IO;
 
 namespace Graduation_Projects_System.Controllers
 {
     [Authorize]
     public class StudentsController : Controller
     {
+        private ApplicationUserManager _userManager;
         private ApplicationDbContext db = new ApplicationDbContext();
 
         public ActionResult AddIdea()
@@ -50,8 +54,10 @@ namespace Graduation_Projects_System.Controllers
         // GET: Students
         public ActionResult Index()
         {
-            var applicationUsers = db.Users.Include(a => a.Department).Include(a => a.leader);
-            return View(applicationUsers.ToList());
+            string xid = User.Identity.GetUserId();
+            var applicationUsers = db.Users.Include(a => a.Department).Include(a => a.leader).Where( a => a.UserType == "Student");
+            applicationUsers.ToList();
+            return View(applicationUsers);
         }
 
         // GET: Students/Details/5
@@ -77,23 +83,50 @@ namespace Graduation_Projects_System.Controllers
             return View();
         }
 
-        // POST: Students/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
+
+        // POST: /Students/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,UserType,name,Departmentid,leaderid,file,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName")] ApplicationUser applicationUser)
+        public async Task<ActionResult> Create(StudentViewModel model, HttpPostedFileBase upload)
         {
+            string xid = User.Identity.GetUserId();
+            ViewBag.Departmentid = new SelectList(db.Departments, "id", "name");
+
             if (ModelState.IsValid)
             {
-                db.Users.Add(applicationUser);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                string UserType = "Student";
+                string path = Path.Combine(Server.MapPath("~/Uploads"), upload.FileName);
+                upload.SaveAs(path);
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, UserType = UserType, name = model.name, Departmentid = model.Departmentid, PhoneNumber = model.phone, leaderid = xid };
+                var result = await UserManager.CreateAsync(user, "s123456@S");
+
+                
+
+                if (result.Succeeded)
+                {
+                    await UserManager.AddToRoleAsync(user.Id, UserType);
+                    
+                    Student s = new Student();
+
+                    s.userId = user.Id;
+                    s.GPA = model.GPA;
+                    s.skills = model.skills;
+                    s.level = model.level;
+                    s.file = path;
+
+                    db.Students.Add(s);
+                    db.SaveChanges();
+
+                    return RedirectToAction("index", "Students");
+                }
+
+                ModelState.AddModelError("", "error result");
+                AddErrors(result);
             }
 
-            ViewBag.Departmentid = new SelectList(db.Departments, "id", "name", applicationUser.Departmentid);
-            ViewBag.leaderid = new SelectList(db.Users, "Id", "UserType", applicationUser.leaderid);
-            return View(applicationUser);
+            ModelState.AddModelError("", "error model state");
+            return View(model);
         }
 
         // GET: Students/Edit/5
@@ -155,6 +188,26 @@ namespace Graduation_Projects_System.Controllers
             db.Users.Remove(applicationUser);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
+        private void AddErrors(IdentityResult result)
+        {
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error);
+            }
         }
 
         protected override void Dispose(bool disposing)

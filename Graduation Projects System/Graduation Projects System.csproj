@@ -233,6 +233,14 @@
     <Compile Include="Migrations\201805021746587_8.Designer.cs">
       <DependentUpon>201805021746587_8.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805030355393_updateTablProfessors.cs" />
+    <Compile Include="Migrations\201805030355393_updateTablProfessors.Designer.cs">
+      <DependentUpon>201805030355393_updateTablProfessors.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805030408459_updateTablProfessors1.cs" />
+    <Compile Include="Migrations\201805030408459_updateTablProfessors1.Designer.cs">
+      <DependentUpon>201805030408459_updateTablProfessors1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Department.cs" />
@@ -311,7 +319,6 @@
     <Content Include="Views\Professors\Create.cshtml" />
     <Content Include="Views\Professors\Delete.cshtml" />
     <Content Include="Views\Professors\Details.cshtml" />
-    <Content Include="Views\Professors\Edit.cshtml" />
     <Content Include="Views\Professors\Index.cshtml" />
     <Content Include="Views\Professors\login.cshtml" />
     <Content Include="Views\Roles\Index.cshtml" />
@@ -329,6 +336,7 @@
     <Content Include="Views\Admin\AddProfessor.cshtml" />
     <Content Include="Views\Admin\DeleteProfessor.cshtml" />
     <Content Include="Views\Admin\ViewProfessor.cshtml" />
+    <Content Include="Views\Professors\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -383,6 +391,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805021746587_8.resx">
       <DependentUpon>201805021746587_8.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805030355393_updateTablProfessors.resx">
+      <DependentUpon>201805030355393_updateTablProfessors.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805030408459_updateTablProfessors1.resx">
+      <DependentUpon>201805030408459_updateTablProfessors1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

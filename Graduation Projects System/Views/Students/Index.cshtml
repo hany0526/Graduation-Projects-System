@@ -15,7 +15,7 @@
             @Html.DisplayNameFor(model => model.Department.name)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.leader.UserType)
+            @Html.DisplayNameFor(model => model.leader.name)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.UserType)
@@ -23,42 +23,17 @@
         <th>
             @Html.DisplayNameFor(model => model.name)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.file)
-        </th>
+        
         <th>
             @Html.DisplayNameFor(model => model.Email)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EmailConfirmed)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PasswordHash)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SecurityStamp)
-        </th>
+        
+        
         <th>
             @Html.DisplayNameFor(model => model.PhoneNumber)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PhoneNumberConfirmed)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TwoFactorEnabled)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LockoutEndDateUtc)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LockoutEnabled)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AccessFailedCount)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UserName)
-        </th>
+        
+        
         <th></th>
     </tr>
 
@@ -68,54 +43,26 @@
             @Html.DisplayFor(modelItem => item.Department.name)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.leader.UserType)
+            @Html.DisplayFor(modelItem => item.leader.name)
         </td>
+
         <td>
             @Html.DisplayFor(modelItem => item.UserType)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.name)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.file)
-        </td>
+        
         <td>
             @Html.DisplayFor(modelItem => item.Email)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EmailConfirmed)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PasswordHash)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SecurityStamp)
-        </td>
+        
         <td>
             @Html.DisplayFor(modelItem => item.PhoneNumber)
         </td>
+        
         <td>
-            @Html.DisplayFor(modelItem => item.PhoneNumberConfirmed)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TwoFactorEnabled)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LockoutEndDateUtc)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LockoutEnabled)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AccessFailedCount)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserName)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            
         </td>
     </tr>
 }

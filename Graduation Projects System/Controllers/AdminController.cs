@@ -37,7 +37,6 @@ namespace Graduation_Projects_System.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> AddProfessor(ProfessorViewModel model)
         {
-            //return RedirectToAction("ListProfessors", "Admin");
                     
             ViewBag.Departmentid = new SelectList(db.Departments, "id", "name");
             
@@ -47,6 +46,16 @@ namespace Graduation_Projects_System.Controllers
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email, UserType = UserType, name = model.name, Departmentid = model.departmentid, PhoneNumber = model.PhoneNumber, leaderid = "0" };
                 var result = await UserManager.CreateAsync(user, model.Password);
 
+                Professor p = new Professor()
+                {
+                    userId = user.Id,
+                    IsAproved = 0,
+                    Interests = "0"
+                };
+                db.Professors.Add(p);
+                db.SaveChanges();
+                
+                //var r = await UserManager.UpdateAsync(user, model.Password);
                 if (result.Succeeded)
                 {                                     
                     await UserManager.AddToRoleAsync(user.Id, UserType);
@@ -57,7 +66,6 @@ namespace Graduation_Projects_System.Controllers
                 AddErrors(result);
             }
 
-            // If we got this far, something failed, redisplay form
             ModelState.AddModelError("", "error model state");
             return View(model);
         }

@@ -104,6 +104,33 @@ namespace Graduation_Projects_System.Models
         public string skills { set; get; }
     }
 
+    public class StudentViewModel
+    {
+        [Required]
+        [Display(Name = "User Name")]
+        public string name { get; set; }
+
+        [Required]
+        [EmailAddress]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
+        public int Departmentid { get; set; }
+
+        public string phone { get; set; }
+
+        public string file { get; set; }
+
+        [Required]
+        public int level { set; get; }
+
+        [Required]
+        public double GPA { set; get; }
+
+        [Required]
+        public string skills { set; get; }
+    }
+
     public class ResetPasswordViewModel
     {
         [Required]

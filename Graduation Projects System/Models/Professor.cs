@@ -9,26 +9,53 @@ namespace Graduation_Projects_System.Models
 {
     public class Professor 
     {
-        [Required]
         public int id { set; get; }
 
         [Required]
-        [DisplayName("Professor Name")]
-        public string name { set; get; }
+        public string Interests { get; set; }
 
-        [Required]
-        public string email { set; get; }
+        public int IsAproved { get; set; }
 
-        [Required]
-        [MinLength(5)]
-        public string password { set; get; }
+        public ApplicationUser user { get; set; }
+        public string userId { get; set; }
 
-        public int Phone { get; set; }
-
-        public Department Department { get; set; }
-        public int Departmentid { get; set; }
-
-        public static implicit operator Professor(int v)
-        {throw new NotImplementedException();}
     }
+
+    public class ProfessorEditProfileViewModel
+    {
+        public string Id { get; set; }
+
+        [Required]
+        [Display(Name = "Professor Name")]
+        public string name { get; set; }
+
+        [Required]
+        [EmailAddress]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
+        [Required]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Display(Name = "Password")]
+        public string Password { get; set; }
+
+        [DataType(DataType.Password)]
+        [Display(Name = "Confirm password")]
+        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        public string ConfirmPassword { get; set; }
+
+        [Required]
+        public string PhoneNumber { get; set; }
+
+        [Required]
+        public string Interests { get; set; }
+
+        [Display(Name = "Department")]
+        public Department department { get; set; }
+        [Display(Name = "Department")]
+        public int departmentid { get; set; }
+
+    }
+
 }
